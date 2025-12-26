@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["php83", "php83Packages.composer"]
+nixLibs = ["libxml2", "openssl"]
+nixOverlays = ["https://github.com/railwayapp/nix-npm-overlay/archive/main.tar.gz"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader"]
+
+[phases.build]
+cmds = [
+    "php artisan config:cache",
+    "php artisan route:cache"
+]
+
+[start]
+cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
