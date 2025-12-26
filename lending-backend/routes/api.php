@@ -11,7 +11,17 @@ use Illuminate\Support\Facades\Route;
 
 // Health check / test endpoint
 Route::get('/health', function () {
-    return response()->json(['status' => 'ok', 'time' => now()]);
+    try {
+        \DB::connection()->getPdo();
+        $dbStatus = 'connected';
+    } catch (\Exception $e) {
+        $dbStatus = 'error: ' . $e->getMessage();
+    }
+    return response()->json([
+        'status' => 'ok',
+        'time' => now(),
+        'database' => $dbStatus
+    ]);
 });
 
 // Handle preflight OPTIONS requests

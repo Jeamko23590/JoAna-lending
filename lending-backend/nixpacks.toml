@@ -1,13 +1,16 @@
 [phases.setup]
-nixPkgs = ["php83", "php83Packages.composer"]
-nixLibs = ["libxml2", "openssl"]
-nixOverlays = ["https://github.com/railwayapp/nix-npm-overlay/archive/main.tar.gz"]
+nixPkgs = ["php83", "php83Packages.composer", "php83Extensions.pdo_pgsql", "php83Extensions.pgsql"]
 
 [phases.install]
 cmds = ["composer install --no-dev --optimize-autoloader"]
 
 [phases.build]
-cmds = []
+cmds = [
+    "php artisan config:clear",
+    "php artisan cache:clear",
+    "mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache",
+    "chmod -R 775 storage bootstrap/cache"
+]
 
 [start]
-cmd = "php artisan config:clear && php artisan migrate --force && php artisan db:seed --class=AdminSeeder --force 2>/dev/null; php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
+cmd = "php artisan migrate --force && php artisan db:seed --class=AdminSeeder --force 2>/dev/null; php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
