@@ -1,0 +1,29 @@
+# Dependencies
+lending-frontend/node_modules/
+lending-backend/vendor/
+
+# Environment files
+.env
+lending-frontend/.env
+lending-backend/.env
+
+# Build outputs
+lending-frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Laravel
+lending-backend/storage/*.key
+lending-backend/storage/logs/*
+!lending-backend/storage/logs/.gitkeep
+lending-backend/bootstrap/cache/*
+!lending-backend/bootstrap/cache/.gitkeep
+
+# Composer
+composer.phar
