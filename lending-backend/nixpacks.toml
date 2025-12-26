@@ -2,18 +2,17 @@
 nixPkgs = ["php83", "php83Packages.composer", "php83Extensions.pdo_pgsql", "php83Extensions.pgsql", "php83Extensions.mbstring", "php83Extensions.xml", "php83Extensions.curl"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader"]
+cmds = [
+    "mkdir -p bootstrap/cache storage/framework/sessions storage/framework/views storage/framework/cache storage/logs",
+    "chmod -R 777 bootstrap/cache storage",
+    "composer install --no-dev --optimize-autoloader"
+]
 
 [phases.build]
 cmds = [
-    "mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs",
-    "chmod -R 775 storage bootstrap/cache",
     "php artisan config:clear",
     "php artisan cache:clear"
 ]
 
 [start]
 cmd = "php artisan migrate --force && php artisan db:seed --class=AdminSeeder --force 2>/dev/null; php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
-
-[variables]
-NIXPACKS_PHP_FALLBACK_PATH = "/app/public"
