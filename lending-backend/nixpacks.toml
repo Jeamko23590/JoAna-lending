@@ -1,3 +1,4 @@
+# Railway deployment config
 [phases.setup]
 nixPkgs = ["php83", "php83Packages.composer", "php83Extensions.pdo_pgsql", "php83Extensions.pgsql", "php83Extensions.mbstring", "php83Extensions.xml", "php83Extensions.curl"]
 
