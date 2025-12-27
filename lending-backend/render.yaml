@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: joana-lending-api
+    env: php
+    rootDir: lending-backend
+    buildCommand: composer install --no-dev --optimize-autoloader && php artisan config:clear
+    startCommand: php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT

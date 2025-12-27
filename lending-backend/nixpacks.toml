@@ -1,4 +1,4 @@
-# Railway deployment config
+# Railway deployment config (keeping for reference)
 [phases.setup]
 nixPkgs = ["php83", "php83Packages.composer", "php83Extensions.pdo_pgsql", "php83Extensions.pgsql", "php83Extensions.mbstring", "php83Extensions.xml", "php83Extensions.curl"]
 
@@ -16,4 +16,4 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan migrate --force; php -S 0.0.0.0:${PORT:-8080} -t public"
+cmd = "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"
